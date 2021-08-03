@@ -28,6 +28,11 @@ class ManualLoadUnload(Cog):
         self.bot.unload_extension(f"lib.cogs.{extension}")
         print(f"Unloaded {extension}")
 
+    @command()
+    async def reload(self, ctx, extension):
+        self.bot.unload_extension(f"lib.cogs.{extension}")
+        self.bot.load_extension(f"lib.cogs.{extension}")
+        print(f"Reloaded {extension}")
 
 
 
