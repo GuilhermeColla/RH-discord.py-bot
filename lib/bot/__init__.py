@@ -51,12 +51,12 @@ class Bot(BotBase):
     async def on_disconnect(self):
         print("bot disconnected")
 
-    async def on_error(self, err, *args, **kwargs):
+    """ async def on_error(self, err, *args, **kwargs):
         if err == "on_command_error":
             print(args)
             await args[0].send("Something went wrong.")
         else:
-            print("An error occured.")
+            print("An error occured.") """
 
     async def on_command_error(self, ctx, exc):
         if isinstance(exc, CommandNotFound):
@@ -68,7 +68,6 @@ class Bot(BotBase):
     
     async def on_ready(self):
         if not self.ready:
-            self.command_channel = self.get_channel(291738640906977290)        
             self.scheduler.start()
             self.ready = True
             print("bot ready")
@@ -77,16 +76,10 @@ class Bot(BotBase):
 
     async def on_message(self, message):
         if not message.author.bot:
-            if self.command_channel and message.content.startswith(PREFIX):
-                if message.channel.id == self.command_channel.id:
-                    await self.process_commands(message)
-                else:
-                    await message.reply(f"{self.command_channel.mention}?")
-            if message.content == "pula?":
-                await message.channel.send("pa caraio :^)")
+            await self.process_commands(message)
 
-    async def on_raw_reaction_add(self, payload):
-        pass
+
+
 
 
 bot = Bot()
