@@ -2,4 +2,6 @@
 *.db-journal
 __pycache__
 lib/bot/token.0
-redacted.py
+.vscode
+discord_bot_env
+beta_*

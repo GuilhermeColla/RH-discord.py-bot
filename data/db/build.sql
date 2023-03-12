@@ -18,8 +18,16 @@ CREATE TABLE IF NOT EXISTS strike_cd(
     Last_strike_date text
 );
 
--- Não podemos fazer uma TABLE com apenas 1 coluna. Isso vai ficar aqui
--- até que eu volte a desenvolver a parte referente a ela.
---CREATE TABLE IF NOT EXISTS Guild_Settings(
---    GuildID integer PRIMARY KEY,
---);
+CREATE TABLE IF NOT EXISTS Guild_Settings(
+    GuildID integer PRIMARY KEY,
+    HOF_channel_ID integer,
+    Command_channel_ID integer,
+    Strike1_role_ID integer,
+    Strike2_role_ID integer
+);
+
+CREATE TABLE IF NOT EXISTS hall_of_fame(
+    Root_message_ID integer PRIMARY KEY,
+    Hall_message_ID integer,
+    Stars integer DEFAULT 0
+);

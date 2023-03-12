@@ -20,21 +20,22 @@ class ManualLoadUnload(Cog):
     # Commands
     @command()
     async def load(self, ctx, extension):
-        self.bot.load_extension(f"lib.cogs.{extension}")
+        await self.bot.load_extension(f"lib.cogs.{extension}")
         print(f"Loaded {extension}")
 
     @command()
     async def unload(self, ctx, extension):
-        self.bot.unload_extension(f"lib.cogs.{extension}")
+        await self.bot.unload_extension(f"lib.cogs.{extension}")
         print(f"Unloaded {extension}")
 
     @command()
     async def reload(self, ctx, extension):
-        self.bot.unload_extension(f"lib.cogs.{extension}")
-        self.bot.load_extension(f"lib.cogs.{extension}")
+        await self.bot.unload_extension(f"lib.cogs.{extension}")
+        await self.bot.load_extension(f"lib.cogs.{extension}")
         print(f"Reloaded {extension}")
+        await ctx.channel.send(f"Reloaded {extension}")
 
 
 
-def setup(bot):
-    bot.add_cog(ManualLoadUnload(bot))
+async def setup(bot):
+    await bot.add_cog(ManualLoadUnload(bot))

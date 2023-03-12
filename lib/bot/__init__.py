@@ -8,7 +8,7 @@ from ..db import db
 
 PREFIX = "rh"
 OWNER_IDS = [229057896158068736]
-COGS = [filename[:-3] for filename in listdir(".\lib\cogs") 
+COGS = [filename[:-3] for filename in listdir("./lib/cogs") 
         if filename.endswith(".py")]
 
 
@@ -26,24 +26,26 @@ class Bot(BotBase):
             intents=Intents.all()
         )
 
-    def setup(self):
+    async def setup(self):
+        #TODO: Quando redacted estiver funcionando, remover esse if/else.
         for cog in COGS:
-            self.load_extension(f"lib.cogs.{cog}")
-            print(f"{cog} cog loaded")
+            if not cog.startswith("beta"):
+                await self.load_extension(f"lib.cogs.{cog}")
+                print(f"{cog} cog loaded")
 
         print("setup complete")
 
-    def run(self, version):
+    async def run(self, version):
         self.VERSION = version
 
         print("running setup...")
-        self.setup()
+        await self.setup()
 
         with open("./lib/bot/token.0", "r", encoding="utf-8") as tf:
             self.TOKEN = tf.read()
         
         print("running bot...")
-        super().run(self.TOKEN, reconnect=True)
+        await super().start(self.TOKEN, reconnect=True)
     
     async def on_connect(self):
         print("bot connected")
@@ -60,7 +62,7 @@ class Bot(BotBase):
 
     async def on_command_error(self, ctx, exc):
         if isinstance(exc, CommandNotFound):
-            await ctx.send("Escreve direito, caraio")
+            await ctx.send("Comando não encontrado.")
         elif hasattr(exc, "original"):
             raise exc.original
         else:
@@ -77,9 +79,6 @@ class Bot(BotBase):
     async def on_message(self, message):
         if not message.author.bot:
             await self.process_commands(message)
-
-
-
 
 
 bot = Bot()

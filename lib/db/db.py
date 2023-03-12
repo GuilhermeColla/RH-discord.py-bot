@@ -23,12 +23,20 @@ def build():
     if isfile(BUILD_PATH):
         scriptexec(BUILD_PATH)
         
+def foo():
+    if isfile(BUILD_PATH):
+        scriptexec(BUILD_PATH)
+    commit()
+
 
 def commit():
+    print("commiting...")
     cxn.commit()
+
 
 def autosave(sched):
     sched.add_job(commit, CronTrigger(second=0))
+
 
 
 def close():
